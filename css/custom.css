@@ -29,7 +29,7 @@
     height: 12rem;
 }
 
-.abilities {
+.types {
     text-align: left;
 }
 
@@ -39,4 +39,14 @@
     background-color: red;
     margin: .5rem;
     text-transform: capitalize;
+}
+.detail-type {
+    text-transform: capitalize;
+}
+.detail-type:after {
+    content: ', ';
+}
+
+.detail-type:last-child:after {
+    content: '';
 }

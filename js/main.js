@@ -25,23 +25,23 @@
 
     document.getElementById('poke-list').addEventListener('click', function(e){
 
-        if (e.target.className.indexOf('type') !== -1) {
+        var classStr = e.target.className;
+
+        if (classStr.match('type') && !classStr.match('type' + 's')) {
             filterByType(e.target.innerHTML.toLowerCase());
             return false;
         }
 
-        var bubbleWay = e.path;
+        var cardWrap = e.srcElement.closest('.poke-card-wrap');
 
-        for (var i = 0; i < bubbleWay.length; i++) {
-            if (bubbleWay[i].className === 'poke-card') {
-                alert('show table');
-                return false;
-            }
+        if (cardWrap) {
+            var podkeID = cardWrap.getElementsByClassName('poke-card')[0].id.replace('poke-', '');
+            showDetails(podkeID);
+            return false;
         }
 
         e.preventDefault();
         e.stopPropagation();
-
 
     }, false);
 
@@ -58,24 +58,56 @@
         }
     }
 
+    function showDetails(pokeID) {
+
+        var detailTmpl  = document.getElementById('detail-tmpl').innerHTML,
+            compiledDetailTmpl = Handlebars.compile(detailTmpl),
+            detailHTML = '';
+
+        for (var i = 0; i < cardsData.length; i++) {
+            if (cardsData[i].pkdx_id == pokeID) {
+                detailHTML = compiledDetailTmpl(cardsData[i]);
+                break;
+            }
+        }
+
+        document.getElementById('poke-detail-card').innerHTML = detailHTML;
+
+        var zeros = '';
+
+        if (pokeID.length === 1) {
+            zeros = '00';
+        } else if (pokeID.length === 2) {
+            zeros = '0';
+        }
+        document.getElementsByClassName('detail-id')[0].innerHTML = '#' + zeros + pokeID;
+
+    }
+
 
 
     function app(requestedPokes) {
 
         cardsData = cardsData.concat(requestedPokes)
 
-        var source  = document.getElementById('card-tmpl').innerHTML,
-            template = Handlebars.compile(source),
+        var cardTmpl  = document.getElementById('card-tmpl').innerHTML,
+            compiledCardTmpl = Handlebars.compile(cardTmpl),
             listHTML = '';
 
         for (var i = 0; i < requestedPokes.length; i++) {
-            listHTML += template(requestedPokes[i])
+            listHTML += compiledCardTmpl(requestedPokes[i])
         }
 
-        var pokeList = document.getElementById('poke-list');
+        document.getElementById('poke-list').innerHTML = listHTML;
 
-        pokeList.innerHTML = listHTML;
 
     }
+
+    Handlebars.registerHelper('ffCond', function(v1, v2, options) {
+        if(v1 === v2) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
 
 })();

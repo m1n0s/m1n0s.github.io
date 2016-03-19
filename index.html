@@ -50,7 +50,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-5">
-                    <div class="poke-detail-card">
+                    <div id="poke-detail-card">
 
                     </div>
                 </div>
@@ -75,48 +75,52 @@
         </li>
     </script>
 
-    <script id="detail-card-tmpl" type="text/x-handlebars-template">
+    <script id="detail-tmpl" type="text/x-handlebars-template">
         <figure>
             <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
         </figure>
-        <h2 class="detail-name">Blah #001</h2>
+        <h2 class="detail-name">{{name}} <span class="detail-id"></span></h2>
         <table class="table detail-table">
             <tbody>
             <tr>
                 <td>Type</td>
-                <td>Type</td>
+                <td>
+                    {{#each types}}
+                        <span class="detail-type">{{name}}</span>
+                    {{/each}}
+                </td>
             </tr>
             <tr>
                 <td>Attack</td>
-                <td>23</td>
+                <td>{{attack}}</td>
             </tr>
             <tr>
-                <td>Defence</td>
-                <td>54</td>
+                <td>Defense</td>
+                <td>{{defense}}</td>
             </tr>
             <tr>
                 <td>HP</td>
-                <td>12</td>
+                <td>{{hp}}</td>
             </tr>
             <tr>
                 <td>SP Attack</td>
-                <td>54</td>
+                <td>{{sp_atk}}</td>
             </tr>
             <tr>
-                <td>SP Defence</td>
-                <td>12</td>
+                <td>SP Defense</td>
+                <td>{{sp_def}}</td>
             </tr>
             <tr>
                 <td>Speed</td>
-                <td>54</td>
+                <td>{{speed}}</td>
             </tr>
             <tr>
                 <td>Weight</td>
-                <td>12</td>
+                <td>{{weight}}</td>
             </tr>
             <tr>
                 <td>Total moves</td>
-                <td>54</td>
+                <td>{{moves.length}}</td>
             </tr>
             </tbody>
         </table>
