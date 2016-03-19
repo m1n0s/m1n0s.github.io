@@ -74,11 +74,39 @@
     </div>
     <!-- /.container -->
 
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7">
+                    <ul id="poke-list" class="row">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+        <li class="col-sm-4 poke-card">
+            <figure>
+                <p><img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="" /></p>
+                <figcaption>{{name}}</figcaption>
+            </figure>
+            <h3 class="name">{{name}}</h3>
+            <ul class="abilities">
+                {{#each abilities}}
+                <li class="{{name}}">{{name}}</li>
+                {{/each}}
+            </ul>
+        </li>
+    </script>
+
     <!-- jQuery Version 1.11.1 -->
-    <!--script src="js/jquery.js"></script-->
+    <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <!--script src="js/bootstrap.min.js"></script-->
+    <script src="js/handlebars-v4.0.5.js"></script>
     <script src="js/main.js"></script>
 
 </body>
