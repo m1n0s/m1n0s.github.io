@@ -27,39 +27,6 @@
 </head>
 
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
     <!-- Page Content -->
     <div class="container">
 
@@ -78,27 +45,81 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-7">
-                    <ul id="poke-list" class="row">
+                    <ul id="poke-list" class="row list-unstyled">
 
                     </ul>
+                </div>
+                <div class="col-sm-5">
+                    <div class="poke-detail-card">
+
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <script id="entry-template" type="text/x-handlebars-template">
-        <li class="col-sm-4 poke-card">
-            <figure>
-                <p><img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="" /></p>
-                <figcaption>{{name}}</figcaption>
-            </figure>
-            <h3 class="name">{{name}}</h3>
-            <ul class="abilities">
-                {{#each abilities}}
-                <li class="{{name}}">{{name}}</li>
-                {{/each}}
-            </ul>
+    <script id="card-tmpl" type="text/x-handlebars-template">
+        <li class="col-sm-4 poke-card-wrap">
+            <div id="poke-{{pkdx_id}}" class="poke-card">
+
+                <figure class="poke-img-wrap">
+                    <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
+                </figure>
+                <h3 class="name">{{name}}</h3>
+                <ul class="list-unstyled types">
+                    {{#each types}}
+                    <li class="type type-{{name}}">{{name}}</li>
+                    {{/each}}
+                </ul>
+            </div>
         </li>
+    </script>
+
+    <script id="detail-card-tmpl" type="text/x-handlebars-template">
+        <figure>
+            <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
+        </figure>
+        <h2 class="detail-name">Blah #001</h2>
+        <table class="table detail-table">
+            <tbody>
+            <tr>
+                <td>Type</td>
+                <td>Type</td>
+            </tr>
+            <tr>
+                <td>Attack</td>
+                <td>23</td>
+            </tr>
+            <tr>
+                <td>Defence</td>
+                <td>54</td>
+            </tr>
+            <tr>
+                <td>HP</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>SP Attack</td>
+                <td>54</td>
+            </tr>
+            <tr>
+                <td>SP Defence</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>Speed</td>
+                <td>54</td>
+            </tr>
+            <tr>
+                <td>Weight</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>Total moves</td>
+                <td>54</td>
+            </tr>
+            </tbody>
+        </table>
     </script>
 
     <!-- jQuery Version 1.11.1 -->

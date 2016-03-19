@@ -1,3 +1,42 @@
-body {
-    padding-top: 7rem;
+.poke-card-wrap {
+    vertical-align: top;
+    margin-bottom: 2rem;
+}
+
+.poke-card {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid dodgerblue;
+}
+
+.fade-out {
+    display: none;
+}
+
+.fade-in {
+    display: block;
+}
+
+.poke-card:hover {
+    cursor: pointer;
+}
+
+.poke-img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 12rem;
+}
+
+.abilities {
+    text-align: left;
+}
+
+.type {
+    display: inline-block;
+    padding: .2rem 1rem;
+    background-color: red;
+    margin: .5rem;
+    text-transform: capitalize;
 }
