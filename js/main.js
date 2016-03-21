@@ -8,6 +8,8 @@
         detailCardWidth,
         filtersWrap = document.getElementsByClassName('filter-helpers')[0],
         loadMoreWrap = document.getElementById('load-more-wrap'),
+        loadMoreBtn = document.getElementById('load-more'),
+        loadMoreLoader = document.getElementById('loader-img'),
         mainSection = document.getElementById('main'),
         filters = [],
         compiledCardTmpl,
@@ -16,6 +18,10 @@
 
 
     document.addEventListener("DOMContentLoaded", function() {
+
+        loadMoreBtn.style.display = 'none';
+        loadMoreLoader.style.display = 'inline';
+
         getData(startUrl);
 
         var cardTmpl  = document.getElementById('card-tmpl').innerHTML,
@@ -143,14 +149,16 @@
     }
 
 
-
     function app(pokeData) {
+
+        loadMoreBtn.style.display = 'inline-block';
+        loadMoreLoader.style.display = 'none';
 
         cardsData = cardsData.concat(pokeData.objects);
         if (pokeData.meta.next) {
             nextUrl = pokeData.meta.next;
         } else {
-            loadMoreWrap.innerHTML = '<pre>It is all ¯\\_(ツ)_/¯</pre>';
+            loadMoreWrap.innerHTML = '<pre>That\'s all ¯\\_(ツ)_/¯</pre>';
         }
 
         var listHTML = '';
@@ -161,10 +169,14 @@
 
         document.getElementById('poke-list').innerHTML += listHTML;
 
-        loadMoreWrap.style.display = 'block';
+        //.style.display = 'block';
     }
 
     function getData(url) {
+
+        loadMoreBtn.style.display = 'none';
+        loadMoreLoader.style.display = 'inline';
+
         fetch('http://pokeapi.co' + url)
             .then(function(response) {
                 return response.json();
@@ -195,22 +207,6 @@
         }
     }, 16);
 
-
-     /*   function() {
-        /!*var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-         document.getElementById('showScroll').innerHTML = scrolled + 'px';*!/
-        var scrolled;
-        if (detailCard.getBoundingClientRect().top < 0) {
-            scrolled = window.pageYOffset || document.documentElement.scrollTop;
-            detailCard.style.top = scrolled - mainSection.offsetTop + 'px';
-        } else {
-            detailCard.style.top = '0px';
-        }
-
-        /!*throttle*!/
-        console.log(mainSection.offsetTop);
-    }
-*/
 
     function throttle(fn, threshhold, scope) {
         threshhold || (threshhold = 250);

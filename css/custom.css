@@ -176,5 +176,22 @@ body {
 
 .load-more {
     text-align: center;
+    /*display: none;*/
+}
+
+/*.loader {
     display: none;
+}*/
+
+.loader img{
+    max-width: 5rem;
+}
+
+@keyframes spin {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+.spinning {
+    animation: spin .5s linear infinite;
 }
