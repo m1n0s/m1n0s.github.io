@@ -1,5 +1,7 @@
 body {
     font-family: 'Ubuntu', sans-serif;
+    background-color: #1C222C;
+    color: #f0f0f0;
 }
 
 .main {
@@ -20,6 +22,9 @@ body {
     padding: 1rem;
     transform:  translateY(0rem);
     transition: transform ease-in .15s ;
+    background-color: #f0f0f0;
+    color: #333;
+
 }
 
 .fade-out {
@@ -100,15 +105,19 @@ body {
 }
 .type-ground {
     background-color: #ab9842;
+    color: #333;
 }
 .type-electric {
     background-color: #eed535;
+    color: #333;
 }
 .type-fairy {
     background-color: #fdb9e9;
+    color: #333;
 }
 .type-grass {
     background-color: #9bcc50;
+    color: #333;
 }
 .type-fighting {
     background-color: #d56723;
@@ -124,6 +133,7 @@ body {
 }
 .type-steel {
     background-color: #9eb7b8;
+    color: #333;
 }
 .type-ghost {
     background-color: #7b62a3;
@@ -131,6 +141,7 @@ body {
 }
 .type-ice {
     background-color: #51c4e7;
+    color: #333;
 }
 .type-dark {
     background-color: #707070;
@@ -172,26 +183,74 @@ body {
     color: #fff;
     text-transform: capitalize;
     font-size: 1.5em;
+    border: none;
+}
+.btn-default:hover {
+
 }
 
 .load-more {
     text-align: center;
-    /*display: none;*/
 }
 
-/*.loader {
-    display: none;
-}*/
-
-.loader img{
-    max-width: 5rem;
+.poke-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -5rem;
+    width: 10rem;
+    height: 10rem;
+    box-shadow: .1rem .1rem .7rem 0 rgba(0, 0, 0, .2);
+    border-radius: 100%;
+    background: linear-gradient(to bottom, #ef4036 0%, #ef4036 45%, #333 46%, #333 54%, #fff 55%, #fff 100%);
+    animation: spin 1.5s .5s infinite;
+}
+.poke-loader:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 100%;
+    background-color: white;
+    box-shadow: 0 0 0 .1rem #333, 0 0 0 .3rem #fff, 0 0 0 .9rem #333;
+    animation: twinkle 1.5s 1s infinite;
 }
 
 @keyframes spin {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.spinning {
-    animation: spin .5s linear infinite;
+@keyframes twinkle {
+    0% {
+        background-color: #fff;
+    }
+    10% {
+        background-color: #f79a94;
+    }
+    20% {
+        background-color: #fff;
+    }
+    30% {
+        background-color: #f79a94;
+    }
+    40% {
+        background-color: #fff;
+    }
+    50% {
+        background-color: #f79a94;
+    }
+    60% {
+        background-color: #fff;
+    }
+    100% {
+        background-color: #fff;
+    }
 }

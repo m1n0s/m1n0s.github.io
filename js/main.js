@@ -1,28 +1,34 @@
 (function () {
 
-    var cardWraps = document.getElementsByClassName('poke-card-wrap'),
-        startUrl = '/api/v1/pokemon/?limit=12',
+    var startUrl = '/api/v1/pokemon/?limit=12',
         nextUrl = '',
         cardsData = [],
+        mainSection = document.getElementById('main'),
+        pokeList = document.getElementById('poke-list'),
+        cardWraps = document.getElementsByClassName('poke-card-wrap'),
         detailCard = document.getElementById('poke-detail-card'),
-        detailCardWidth,
-        filtersWrap = document.getElementsByClassName('filter-helpers')[0],
         loadMoreWrap = document.getElementById('load-more-wrap'),
         loadMoreBtn = document.getElementById('load-more'),
-        loadMoreLoader = document.getElementById('loader-img'),
-        mainSection = document.getElementById('main'),
+        filtersWrap = mainSection.getElementsByClassName('filter-helpers')[0],
+        loadMoreLoader = mainSection.getElementsByClassName('poke-loader')[0],
+        detailID = detailCard.getElementsByClassName('detail-id')[0],
+        detailCardWidth,
         filters = [],
         compiledCardTmpl,
         compiledDetailTmpl,
-        compiledFilterTmpl;
+        compiledFilterTmpl,
+        typeClass = 'type',
+        cardClass = 'poke-card';
 
+    /* Event Listeners */
 
     document.addEventListener("DOMContentLoaded", function() {
 
         loadMoreBtn.style.display = 'none';
         loadMoreLoader.style.display = 'inline';
+        loadMoreLoader.style.display = 'none';
 
-        getData(startUrl);
+        //getData(startUrl);
 
         var cardTmpl  = document.getElementById('card-tmpl').innerHTML,
             detailTmpl  = document.getElementById('detail-tmpl').innerHTML,
@@ -35,19 +41,19 @@
         detailCardWidth = detailCard.offsetWidth;
     });
 
-    document.getElementById('poke-list').addEventListener('click', function(e){
+    pokeList.addEventListener('click', function(e){
 
         var classStr = e.target.className;
 
-        if (classStr.match('type') && !classStr.match('type' + 's') ) {
+        if (classStr.match(typeClass) && !classStr.match(typeClass + 's') ) {
             filterByType(e.target.innerHTML.toLowerCase());
             return false;
         }
 
-        var cardWrap = e.srcElement.closest('.poke-card-wrap');
+        var cardWrap = e.srcElement.closest('.' + cardClass + '-wrap');
 
         if (cardWrap) {
-            var podkeID = cardWrap.getElementsByClassName('poke-card')[0].id.replace('poke-', '');
+            var podkeID = cardWrap.getElementsByClassName(cardClass)[0].id.replace('poke-', '');
             showDetails(podkeID);
             return false;
         }
@@ -56,7 +62,7 @@
         e.stopPropagation();
     });
 
-    document.getElementById('load-more').addEventListener('click', function(){
+    loadMoreBtn.addEventListener('click', function(){
         for (var i = 0; i < cardWraps.length; i++) {
             cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
         }
@@ -75,53 +81,60 @@
             deleteType = e.target.closest('.filter-item').className.replace('filter-item type-', '');
             filterByType(deleteType, true);
         }
-        return false;
     });
 
-
-
-    function filterByType(filterType, isRemove) {
-
-        if (typeof isRemove === 'undefined') {
-            isRemove = false;
-        }
-
-        if (filters.join().match(filterType) && !isRemove) {
-            return;
-        }
-
-        if (isRemove) {
-            filters = filters.filter(function(type){
-                return type !== filterType;
-            });
-            removeElement(filtersWrap.getElementsByClassName('type-' + filterType)[0]);
+    window.onscroll = throttle(function (event) {
+        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrolled > mainSection.offsetTop) {
+            detailCard.style.position = 'fixed';
+            detailCard.style.width = detailCardWidth + 'px';
         } else {
-            filters.push(filterType);
-            filtersWrap.innerHTML += compiledFilterTmpl({type: filterType});
+            detailCard.style.position = 'absolute';
         }
+    }, 16);
 
-        if (!filters.length && filtersWrap.style.display === 'block') {
-            filtersWrap.style.display = 'none';
+    window.onresize = throttle(function (event) {
+        console.log('lal');
+    }, 16);
+
+    /* Functions */
+
+    function app(pokeData) {
+
+        loadMoreBtn.style.display = 'inline-block';
+        loadMoreLoader.style.display = 'none';
+
+        cardsData = cardsData.concat(pokeData.objects);
+        if (pokeData.meta.next) {
+            nextUrl = pokeData.meta.next;
         } else {
-            filtersWrap.style.display = 'block';
+            loadMoreWrap.innerHTML = '<pre>That\'s all ¯\\_(ツ)_/¯</pre>';
         }
 
-        for (var i = 0; i < cardWraps.length; i++) {
-            cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
+        var listHTML = '';
 
-            var matches = 0;
-            filters.forEach(function(type){
-                if (cardWraps[i].getElementsByClassName('type-' + type).length !== 0) {
-                    matches++;
-                }
+        for (var i = 0; i < pokeData.objects.length; i++) {
+            listHTML += compiledCardTmpl(pokeData.objects[i])
+        }
+
+        pokeList.innerHTML += listHTML;
+    }
+
+    function getData(url) {
+
+        loadMoreBtn.style.display = 'none';
+        loadMoreLoader.style.display = 'inline';
+
+        fetch('http://pokeapi.co' + url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                app(data);
+            })
+            .catch(function(error) {
+                alert('Sorry, something went wrong. Please try again later.');
             });
-
-            if (matches === filters.length) {
-                cardWraps[i].className += ' fade-in';
-            } else {
-                cardWraps[i].className += ' fade-out';
-            }
-        }
     }
 
     function showDetails(pokeID) {
@@ -144,69 +157,60 @@
         } else if (pokeID.length === 2) {
             zeros = '0';
         }
-        detailCard.getElementsByClassName('detail-id')[0].innerHTML = '#' + zeros + pokeID;
+        detailID.innerHTML = '#' + zeros + pokeID;
 
     }
 
+    function filterByType(filterType, isRemove) {
 
-    function app(pokeData) {
-
-        loadMoreBtn.style.display = 'inline-block';
-        loadMoreLoader.style.display = 'none';
-
-        cardsData = cardsData.concat(pokeData.objects);
-        if (pokeData.meta.next) {
-            nextUrl = pokeData.meta.next;
-        } else {
-            loadMoreWrap.innerHTML = '<pre>That\'s all ¯\\_(ツ)_/¯</pre>';
+        if (typeof isRemove === 'undefined') {
+            isRemove = false;
         }
 
-        var listHTML = '';
-
-        for (var i = 0; i < pokeData.objects.length; i++) {
-            listHTML += compiledCardTmpl(pokeData.objects[i])
+        if (!isRemove && filters.join().match(filterType)) {
+            return;
         }
 
-        document.getElementById('poke-list').innerHTML += listHTML;
-
-        //.style.display = 'block';
-    }
-
-    function getData(url) {
-
-        loadMoreBtn.style.display = 'none';
-        loadMoreLoader.style.display = 'inline';
-
-        fetch('http://pokeapi.co' + url)
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
-                app(data);
-            })
-            .catch(function(error) {
-                console.log(error);
+        if (isRemove) {
+            filters = filters.filter(function(type){
+                return type !== filterType;
             });
+            removeElement(filtersWrap.getElementsByClassName(typeClass + '-' + filterType)[0]);
+        } else {
+            filters.push(filterType);
+            filtersWrap.innerHTML += compiledFilterTmpl({type: filterType});
+        }
+
+        if (!filters.length && filtersWrap.style.display === 'block') {
+            filtersWrap.style.display = 'none';
+        } else {
+            filtersWrap.style.display = 'block';
+        }
+
+        for (var i = 0; i < cardWraps.length; i++) {
+            cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
+
+            var matches = 0;
+            filters.forEach(function(type){
+                if (cardWraps[i].getElementsByClassName(typeClass + '-' + type).length !== 0) {
+                    matches++;
+                }
+            });
+
+            if (matches === filters.length) {
+                cardWraps[i].className += ' fade-in';
+            } else {
+                cardWraps[i].className += ' fade-out';
+            }
+        }
     }
+
+
+    /* Next code here were stolen from WWW */
 
     function removeElement(element) {
         element && element.parentNode && element.parentNode.removeChild(element);
     }
-
-    function centerDetailCard() {
-        console.log(detailCard.getBoundingClientRect());
-    }
-
-    window.onscroll = throttle(function (event) {
-        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrolled > mainSection.offsetTop) {
-            detailCard.style.position = 'fixed';
-            detailCard.style.width = detailCardWidth + 'px';
-        } else {
-            detailCard.style.position = 'absolute';
-        }
-    }, 16);
-
 
     function throttle(fn, threshhold, scope) {
         threshhold || (threshhold = 250);
