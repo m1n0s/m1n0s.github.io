@@ -1,17 +1,20 @@
 (function () {
 
-    var startUrl = '/api/v1/pokemon/?limit=12',
+    var startUrl = '/api/v1/pokemon/?limit=',
         nextUrl = '',
         cardsData = [],
+        limitForm = document.getElementById('limit-size'),
+        limitInput = document.getElementById('limit-count'),
         mainSection = document.getElementById('main'),
         pokeList = document.getElementById('poke-list'),
         cardWraps = document.getElementsByClassName('poke-card-wrap'),
         detailCard = document.getElementById('poke-detail-card'),
         loadMoreWrap = document.getElementById('load-more-wrap'),
         loadMoreBtn = document.getElementById('load-more'),
+        detailID,
         filtersWrap = mainSection.getElementsByClassName('filter-helpers')[0],
         loadMoreLoader = mainSection.getElementsByClassName('poke-loader')[0],
-        detailID = detailCard.getElementsByClassName('detail-id')[0],
+
         detailCardWidth,
         filters = [],
         compiledCardTmpl,
@@ -39,6 +42,14 @@
         compiledFilterTmpl = Handlebars.compile(filterTmpl);
 
         detailCardWidth = detailCard.offsetWidth;
+    });
+
+    limitForm.addEventListener('submit', function(e) {
+
+        getData(startUrl += limitInput.value);
+
+        e.stopPropagation();
+        e.preventDefault();
     });
 
     pokeList.addEventListener('click', function(e){
@@ -151,12 +162,14 @@
         detailCard.innerHTML = detailHTML;
 
         var zeros = '';
+        detailID = document.getElementById('detail-id');
 
         if (pokeID.length === 1) {
             zeros = '00';
         } else if (pokeID.length === 2) {
             zeros = '0';
         }
+
         detailID.innerHTML = '#' + zeros + pokeID;
 
     }

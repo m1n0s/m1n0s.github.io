@@ -30,13 +30,15 @@
         </div>
     </div>
 
-    <section id="limit">
-        <h2>Hello, %kottanName%!</h2>
-        <form id="limit-size">
-            how many
-            <input type="text">
-            blah
-            <button type="submit" class="btn btn-default">Show me</button>
+    <section class="container">
+        <h2 class="hello">Hello, %kottanName%!</h2>
+        <form id="limit-size" class="form">
+            <p>I try read your minds but you is so smart that I can't do it.</p>
+            <p>Please, tell me how many (up to 720) Pokemons you want to see now?</p>
+            <input type="text" id="limit-count" maxlength="3">
+            <br>
+            <button type="submit" class="btn btn-default">go</button>
+            <p>Yeap! It is NNN. I thought as much.</p>
         </form>
     </section>
 
@@ -87,7 +89,7 @@
         <figure>
             <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
         </figure>
-        <h2 class="detail-name">{{name}} <span class="detail-id"></span></h2>
+        <h2 class="detail-name">{{name}} <span id="detail-id"></span></h2>
         <table class="table detail-table">
             <tbody>
             <tr>

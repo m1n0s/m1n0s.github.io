@@ -254,3 +254,18 @@ body {
         background-color: #fff;
     }
 }
+.form,
+.hello {
+    text-align: center;
+}
+
+.form input {
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 4rem;
+    font-size: 10em;
+    width: 30rem;
+    text-align: center;
+    margin: 5rem 0;
+}
