@@ -22,24 +22,28 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h1>Pokedex by m1n0s</h1>
+    <header id="main-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1>Pokedex by m1n0s</h1>
+                </div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <section class="container">
-        <h2 class="hello">Hello, %kottanName%!</h2>
-        <form id="limit-size" class="form">
-            <p>I try read your minds but you is so smart that I can't do it.</p>
-            <p>Please, tell me how many (up to 720) Pokemons you want to see now?</p>
-            <input type="text" id="limit-count" maxlength="3">
-            <br>
-            <button type="submit" class="btn btn-default">go</button>
-            <p>Yeap! It is NNN. I thought as much.</p>
-        </form>
+    <section id="greeting" class="greeting-wrap">
+        <div class="container">
+            <h2 class="hello">Hello, %kottanName%!</h2>
+            <form id="limit-size" class="form">
+                <p>I try read your minds but you is so smart that I can't do it.</p>
+                <p>Please, tell me how many (up to 778) Pokemons you want to see now?</p>
+                <input type="text" id="limit-count" maxlength="3">
+                <br>
+                <button type="submit" class="btn btn-default">go</button>
+                <p>Yeap! It is NNN. I thought as much.</p>
+            </form>
+        </div>
     </section>
 
     <section id="main" class="main">
@@ -60,7 +64,7 @@
                 </div>
             </div>
             <div class="row">
-                <div id="load-more-wrap" class="col-sm-7 load-more">
+                <div id="load-more-wrap" class="col-sm-8 load-more">
                     <button id="load-more" class="btn btn-default">load more</button>
                     <div class="poke-loader"></div>
                 </div>

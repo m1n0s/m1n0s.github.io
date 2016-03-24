@@ -6,6 +6,8 @@
         limitForm = document.getElementById('limit-size'),
         limitInput = document.getElementById('limit-count'),
         mainSection = document.getElementById('main'),
+        headerSection = document.getElementById('main-header'),
+        greetingSection = document.getElementById('greeting'),
         pokeList = document.getElementById('poke-list'),
         cardWraps = document.getElementsByClassName('poke-card-wrap'),
         detailCard = document.getElementById('poke-detail-card'),
@@ -14,7 +16,7 @@
         detailID,
         filtersWrap = mainSection.getElementsByClassName('filter-helpers')[0],
         loadMoreLoader = mainSection.getElementsByClassName('poke-loader')[0],
-
+        headerHeight,
         detailCardWidth,
         filters = [],
         compiledCardTmpl,
@@ -30,6 +32,12 @@
         loadMoreBtn.style.display = 'none';
         loadMoreLoader.style.display = 'inline';
         loadMoreLoader.style.display = 'none';
+        mainSection.style.display = 'none';
+
+        headerHeight = headerSection.offsetHeight;
+
+        greetingSection.style.paddingTop = headerHeight + 'px';
+        greetingSection.style.marginTop = -headerHeight + 'px';
 
         //getData(startUrl);
 
@@ -45,6 +53,9 @@
     });
 
     limitForm.addEventListener('submit', function(e) {
+
+        greetingSection.style.display = 'none';
+        mainSection.style.display = 'block';
 
         getData(startUrl += limitInput.value);
 
