@@ -261,12 +261,33 @@ body,
         background-color: #fff;
     }
 }
+
+.greeting-wrap {
+    display: flex;
+    align-items: center;
+}
+.greeting-wrap p {
+    font-size: 1.5em;
+}
 .form,
 .hello {
     text-align: center;
 }
 
+.guess {
+    display: none;
+    font-size: 2em;
+    text-align: center;
+}
+
+
+.hello {
+    font-size: 5em;
+    margin: 0 0 5rem;
+}
+
 .form input {
+    display: block;
     background-color: #f0f0f0;
     color: #333;
     border: none;
@@ -274,5 +295,17 @@ body,
     font-size: 10em;
     width: 30rem;
     text-align: center;
-    margin: 5rem 0;
+    margin: 5rem auto;
+}
+
+.form input:focus {
+    outline: 0;
+}
+
+.form .btn-default {
+    width: 30rem;
+    height: 10rem;
+    font-size: 5em;
+    line-height: 1;
+    text-transform: uppercase;
 }

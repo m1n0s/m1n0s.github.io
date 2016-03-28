@@ -36,7 +36,7 @@
 
         headerHeight = headerSection.offsetHeight;
 
-        greetingSection.style.paddingTop = headerHeight + 'px';
+        //greetingSection.style.paddingTop = headerHeight + 'px';
         greetingSection.style.marginTop = -headerHeight + 'px';
 
         //getData(startUrl);
@@ -48,14 +48,14 @@
         compiledCardTmpl = Handlebars.compile(cardTmpl);
         compiledDetailTmpl = Handlebars.compile(detailTmpl);
         compiledFilterTmpl = Handlebars.compile(filterTmpl);
-
-        detailCardWidth = detailCard.offsetWidth;
     });
 
     limitForm.addEventListener('submit', function(e) {
 
         greetingSection.style.display = 'none';
         mainSection.style.display = 'block';
+
+        detailCardWidth = detailCard.parentNode.offsetWidth - 30;
 
         getData(startUrl += limitInput.value);
 
@@ -116,7 +116,7 @@
     }, 16);
 
     window.onresize = throttle(function (event) {
-        console.log('lal');
+        detailCardWidth = detailCard.parentNode.offsetWidth - 30;
     }, 16);
 
     /* Functions */
