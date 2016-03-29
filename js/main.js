@@ -13,6 +13,10 @@
         detailCard = document.getElementById('poke-detail-card'),
         loadMoreWrap = document.getElementById('load-more-wrap'),
         loadMoreBtn = document.getElementById('load-more'),
+        filtersBadges = document.getElementById('filters-badges'),
+        filterRuleWrap = document.getElementById('toggle-switch'),
+        filterRuleCheckbox = document.getElementById('filter-rule'),
+        filterRule = false, /* true = any | false = all */
         detailID,
         filtersWrap = mainSection.getElementsByClassName('filter-helpers')[0],
         loadMoreLoader = mainSection.getElementsByClassName('poke-loader')[0],
@@ -48,6 +52,11 @@
         compiledCardTmpl = Handlebars.compile(cardTmpl);
         compiledDetailTmpl = Handlebars.compile(detailTmpl);
         compiledFilterTmpl = Handlebars.compile(filterTmpl);
+    });
+
+    filterRuleCheckbox.addEventListener('change', function(e){
+        filterRule = this.checked;
+        filterByType();
     });
 
     limitForm.addEventListener('submit', function(e) {
@@ -88,10 +97,7 @@
         for (var i = 0; i < cardWraps.length; i++) {
             cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
         }
-        var badges = filtersWrap.getElementsByClassName('filter-item');
-        for (var i = 0; i < filters.length; i++) {
-            removeElement(badges[0]);
-        }
+        filtersBadges.innerHTML = '';
         filters = [];
         filtersWrap.style.display = 'none';
         getData(nextUrl);
@@ -191,7 +197,7 @@
             isRemove = false;
         }
 
-        if (!isRemove && filters.join().match(filterType)) {
+        if (!isRemove && filterType && filters.join().match(filterType)) {
             return;
         }
 
@@ -199,10 +205,10 @@
             filters = filters.filter(function(type){
                 return type !== filterType;
             });
-            removeElement(filtersWrap.getElementsByClassName(typeClass + '-' + filterType)[0]);
-        } else {
+            removeElement(filtersBadges.getElementsByClassName(typeClass + '-' + filterType)[0]);
+        } else if (filterType) {
             filters.push(filterType);
-            filtersWrap.innerHTML += compiledFilterTmpl({type: filterType});
+            filtersBadges.innerHTML += compiledFilterTmpl({type: filterType});
         }
 
         if (!filters.length && filtersWrap.style.display === 'block') {
@@ -211,20 +217,39 @@
             filtersWrap.style.display = 'block';
         }
 
+        if (filters.length > 1) {
+            filterRuleWrap.style.display = 'inline-block';
+        } else {
+            filterRuleWrap.style.display = 'none';
+        }
+
         for (var i = 0; i < cardWraps.length; i++) {
-            cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
 
-            var matches = 0;
-            filters.forEach(function(type){
-                if (cardWraps[i].getElementsByClassName(typeClass + '-' + type).length !== 0) {
-                    matches++;
+            if (filters.length) {
+                cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
+
+                var matches = 0;
+                filters.forEach(function (type) {
+                    if (cardWraps[i].getElementsByClassName(typeClass + '-' + type).length !== 0) {
+                        matches++;
+                    }
+                });
+
+                if (!filterRule) {
+                    if (matches !== 0) {
+                        cardWraps[i].className += ' fade-in';
+                    } else {
+                        cardWraps[i].className += ' fade-out';
+                    }
+                } else {
+                    if (matches === filters.length) {
+                        cardWraps[i].className += ' fade-in';
+                    } else {
+                        cardWraps[i].className += ' fade-out';
+                    }
                 }
-            });
-
-            if (matches === filters.length) {
-                cardWraps[i].className += ' fade-in';
             } else {
-                cardWraps[i].className += ' fade-out';
+                cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
             }
         }
     }

@@ -309,3 +309,122 @@ body,
     line-height: 1;
     text-transform: uppercase;
 }
+
+
+
+/* Stolen */
+
+.toggle-switch {
+    display: none;
+    vertical-align: middle;
+}
+
+.switch .slide-button,
+.toggle p span {
+    display: none;
+}
+.toggle {
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+.toggle label {
+    position: relative;
+    z-index: 3;
+
+    display: block;
+    width: 100%;
+}
+.toggle input {
+    position: absolute;
+    opacity: 0;
+    z-index: 5;
+}
+.toggle p {
+    position: absolute;
+    left: -10rem;
+    width: 100%;
+    margin: 0;
+    padding-right: 10rem;
+    text-align: left;
+    font-family: OpenSans-SemiBold, "Helvetica Neue", helvetica, arial, sans-serif;
+    font-size: .8em;
+}
+.toggle p span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    display: block;
+    width: 50%;
+    margin-left: 10rem;
+    text-align: center;
+}
+.toggle p span:last-child {
+    left: 50%;
+}
+.toggle .slide-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 4;
+    display: block;
+    width: 50%;
+    height: 100%;
+    padding: 0;
+}
+.toggle {
+    display: inline-block;
+    height: 2.5rem;
+}
+.toggle .slide-button {
+    display: block;
+    transition: all 0.3s ease-out;
+}
+.toggle label,
+.toggle p {
+    line-height: 2.5rem;
+    vertical-align: middle;
+}
+.toggle input:checked ~ .slide-button {
+    right: 50%;
+}
+/* Bugfix for older Webkit, including mobile Webkit.
+ * http://css-tricks.com/webkit-sibling-bug/
+ */
+.switch, .toggle {
+    -webkit-animation: bugfix infinite 1s;
+}
+@-webkit-keyframes bugfix { from { position: relative; } to { position: relative; } }
+.switch {
+    background-color: #D6D6D6;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 1px #191b1e;
+    border-radius: .5rem;
+    vertical-align: middle;
+    width: 10rem;
+}
+
+.switch input:checked + label {
+    color: #333;
+}
+
+.switch .slide-button {
+    background-color: #2aa0c8;
+    border-radius: .5rem;
+}
+
+.switch p {
+    color: #333;
+    text-shadow: none;
+}
+
+.switch span {
+    color: #fff;
+}
+
+.switch.blue .slide-button {
+    background-color: #38a3d4;
+}
