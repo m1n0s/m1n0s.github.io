@@ -1,24 +1,84 @@
+/* General */
 body {
     font-family: 'Ubuntu', sans-serif;
     background-color: #1C222C;
     color: #f0f0f0;
 }
-
 html,
 body,
 .greeting-wrap {
     height: 100%;
 }
-
 .main {
-    margin: 5rem 0;
+    margin: 5rem 0 15rem;
+    display: none;
+}
+.no-padding {
+    padding: 0;
+}
+.btn-default {
+    width: 70%;
+    background-color: royalblue;
+    color: #fff;
+    text-transform: capitalize;
+    font-size: 1.5em;
+    border: none;
+}
+.btn-default:hover {
+
+}
+.error {
+    color: red;
 }
 
+/* Hello page */
+.greeting-wrap {
+    display: flex;
+    align-items: center;
+}
+.greeting-wrap p {
+    font-size: 1.5em;
+}
+.form,
+.hello {
+    text-align: center;
+}
+.guess {
+    display: none;
+    font-size: 2em;
+    text-align: center;
+}
+.hello {
+    font-size: 5em;
+    margin: 0 0 5rem;
+}
+.form input {
+    display: block;
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 4rem;
+    font-size: 10em;
+    width: 30rem;
+    text-align: center;
+    margin: 5rem auto;
+}
+.form input:focus {
+    outline: 0;
+}
+.form .btn-default {
+    width: 30rem;
+    height: 10rem;
+    font-size: 5em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+/* Cards */
 .poke-card-wrap {
     vertical-align: top;
     margin-bottom: 2rem;
 }
-
 .poke-card {
     width: 90%;
     margin: 0 auto;
@@ -30,39 +90,37 @@ body,
     transition: transform ease-in .15s ;
     background-color: #f0f0f0;
     color: #333;
-
 }
-
-.fade-out {
-    display: none;
-}
-
-.fade-in {
-    display: block;
-}
-
-.filter-delete:hover {
-    cursor: pointer;
-}
-
 .poke-card:hover {
     cursor: pointer;
     transform:  translateY(-.5rem);
 }
-
 .poke-img-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 12rem;
 }
-
 .poke-img-wrap img {
     max-width: 100%;
+    max-height: 100%;
 }
-
+.name {
+    font-size: 1.7em;
+}
 .types {
     text-align: left;
+}
+
+/* Filters */
+.fade-out {
+    display: none;
+}
+.fade-in {
+    display: block;
+}
+.filter-delete:hover {
+    cursor: pointer;
 }
 .filter-helpers {
     display: none;
@@ -71,11 +129,12 @@ body,
 }
 .filter-helpers h6 {
     display: inline-block;
-    margin: 0;
+    margin: 1rem 1rem 1rem 0;
     font-size: 1.3em;
-    margin-right: 1em;
     vertical-align: middle;
 }
+
+/* Filter items */
 .type,
 .filter-item {
     display: inline-block;
@@ -85,7 +144,6 @@ body,
     text-transform: capitalize;
     vertical-align: middle;
 }
-
 .type-normal {
     background-color: #a4acaf;
     color: #fff;
@@ -159,6 +217,7 @@ body,
     color: #fff;
 }
 
+/*Detail card */
 .detail-card {
     text-align: center;
     position: absolute;
@@ -179,146 +238,15 @@ body,
 .detail-type:after {
     content: ', ';
 }
-
 .detail-type:last-child:after {
     content: '';
 }
 
-.btn-default {
-    width: 70%;
-    background-color: royalblue;
-    color: #fff;
-    text-transform: capitalize;
-    font-size: 1.5em;
-    border: none;
-}
-.btn-default:hover {
-
-}
-
-.load-more {
-    text-align: center;
-}
-
-.poke-loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -5rem;
-    width: 10rem;
-    height: 10rem;
-    box-shadow: .1rem .1rem .7rem 0 rgba(0, 0, 0, .2);
-    border-radius: 100%;
-    background: linear-gradient(to bottom, #ef4036 0%, #ef4036 45%, #333 46%, #333 54%, #fff 55%, #fff 100%);
-    animation: spin 1.5s .5s infinite;
-}
-.poke-loader:before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 1.7rem;
-    height: 1.7rem;
-    border-radius: 100%;
-    background-color: white;
-    box-shadow: 0 0 0 .1rem #333, 0 0 0 .3rem #fff, 0 0 0 .9rem #333;
-    animation: twinkle 1.5s 1s infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes twinkle {
-    0% {
-        background-color: #fff;
-    }
-    10% {
-        background-color: #f79a94;
-    }
-    20% {
-        background-color: #fff;
-    }
-    30% {
-        background-color: #f79a94;
-    }
-    40% {
-        background-color: #fff;
-    }
-    50% {
-        background-color: #f79a94;
-    }
-    60% {
-        background-color: #fff;
-    }
-    100% {
-        background-color: #fff;
-    }
-}
-
-.greeting-wrap {
-    display: flex;
-    align-items: center;
-}
-.greeting-wrap p {
-    font-size: 1.5em;
-}
-.form,
-.hello {
-    text-align: center;
-}
-
-.guess {
-    display: none;
-    font-size: 2em;
-    text-align: center;
-}
-
-
-.hello {
-    font-size: 5em;
-    margin: 0 0 5rem;
-}
-
-.form input {
-    display: block;
-    background-color: #f0f0f0;
-    color: #333;
-    border: none;
-    border-radius: 4rem;
-    font-size: 10em;
-    width: 30rem;
-    text-align: center;
-    margin: 5rem auto;
-}
-
-.form input:focus {
-    outline: 0;
-}
-
-.form .btn-default {
-    width: 30rem;
-    height: 10rem;
-    font-size: 5em;
-    line-height: 1;
-    text-transform: uppercase;
-}
-
-
-
-/* Stolen */
-
+/* Filters toggle */
 .toggle-switch {
     display: none;
     vertical-align: middle;
 }
-
 .switch .slide-button,
 .toggle p span {
     display: none;
@@ -331,7 +259,6 @@ body,
 .toggle label {
     position: relative;
     z-index: 3;
-
     display: block;
     width: 100%;
 }
@@ -347,8 +274,7 @@ body,
     margin: 0;
     padding-right: 10rem;
     text-align: left;
-    font-family: OpenSans-SemiBold, "Helvetica Neue", helvetica, arial, sans-serif;
-    font-size: .8em;
+    font-size: .9em;
 }
 .toggle p span {
     position: absolute;
@@ -383,48 +309,177 @@ body,
 }
 .toggle label,
 .toggle p {
-    line-height: 2.5rem;
+    line-height: 2.3rem;
     vertical-align: middle;
 }
 .toggle input:checked ~ .slide-button {
     right: 50%;
 }
-/* Bugfix for older Webkit, including mobile Webkit.
- * http://css-tricks.com/webkit-sibling-bug/
- */
-.switch, .toggle {
-    -webkit-animation: bugfix infinite 1s;
-}
-@-webkit-keyframes bugfix { from { position: relative; } to { position: relative; } }
 .switch {
     background-color: #D6D6D6;
     color: #fff;
     font-weight: bold;
     text-align: center;
-    text-shadow: 1px 1px 1px #191b1e;
-    border-radius: .5rem;
+    text-shadow: .1rem .1rem .1rem #191b1e;
+    border-radius: .6rem;
     vertical-align: middle;
     width: 10rem;
 }
-
 .switch input:checked + label {
     color: #333;
 }
-
 .switch .slide-button {
     background-color: #2aa0c8;
     border-radius: .5rem;
 }
-
 .switch p {
     color: #333;
     text-shadow: none;
 }
-
 .switch span {
     color: #fff;
 }
 
-.switch.blue .slide-button {
-    background-color: #38a3d4;
+/* Load more && loader */
+.load-more-wrap {
+    text-align: center;
+}
+.poke-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -5rem;
+    width: 10rem;
+    height: 10rem;
+    box-shadow: .1rem .1rem .7rem 0 rgba(0, 0, 0, .2);
+    border-radius: 100%;
+    background: linear-gradient(to bottom, #ef4036 0%, #ef4036 45%, #333 46%, #333 54%, #fff 55%, #fff 100%);
+    animation: spin 1.5s .5s infinite;
+}
+.poke-loader:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 0 .1rem #333, 0 0 0 .3rem #fff, 0 0 0 .9rem #333;
+    animation: twinkle 1.5s 1s infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes twinkle {
+    0% {
+        background-color: #fff;
+    }
+    10% {
+        background-color: #f79a94;
+    }
+    20% {
+        background-color: #fff;
+    }
+    30% {
+        background-color: #f79a94;
+    }
+    40% {
+        background-color: #fff;
+    }
+    50% {
+        background-color: #f79a94;
+    }
+    60% {
+        background-color: #fff;
+    }
+    100% {
+        background-color: #fff;
+    }
+}
+
+@media (max-width: 54.857em) {
+    h1 {
+        font-size: 1.5em;
+    }
+    .btn-default {
+        width: 100%;
+    }
+    .poke-card {
+        width: 100%;
+    }
+    .poke-card:hover {
+        transform:  translateY(0);
+    }
+    .poke-img-wrap {
+        height: 8rem;
+    }
+    .name {
+        font-size: 1.2em;
+    }
+    .hello {
+        font-size: 3.5em;
+    }
+    .greeting-wrap p {
+        font-size: 1.2em;
+    }
+    .form input {
+        font-size: 8em;
+        width: 26rem;
+        border-radius: 2rem;
+    }
+    .form .btn-default {
+        height: 8rem;
+        width: 26rem;
+        font-size: 3.5em;
+    }
+
+}
+@media (max-width: 30.357em) {
+    .btn-default {
+        font-size: 1.2em;
+    }
+    .poke-img-wrap {
+        height: 6rem;
+    }
+    .name {
+        font-size: 1em;
+    }
+    .hello {
+        font-size: 2em;
+    }
+    .greeting-wrap p {
+        font-size: 1em;
+    }
+    .form input {
+        font-size: 4em;
+        width: 15rem;
+        border-radius: 1rem;
+    }
+    .form .btn-default {
+        height: 4rem;
+        width: 15rem;
+        font-size: 2em;
+    }
+    .detail-card {
+        padding-right: 2rem;
+    }
+    .detail-name {
+        font-size: 1.5em;
+    }
+    .detail-table {
+        font-size: .9em;
+    }
+    .type, .filter-item {
+        font-size: .8em;
+    }
+    .detail-table td:first-child {
+        width: 50%;
+    }
 }

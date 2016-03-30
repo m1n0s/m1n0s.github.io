@@ -1,9 +1,8 @@
 (function () {
 
-    var startUrl = '/api/v1/pokemon/?limit=',
-        nextUrl = '',
-        cardsData = [],
-        limitForm = document.getElementById('limit-size'),
+    'use strict';
+
+    const limitForm = document.getElementById('limit-size'),
         limitInput = document.getElementById('limit-count'),
         mainSection = document.getElementById('main'),
         headerSection = document.getElementById('main-header'),
@@ -16,76 +15,209 @@
         filtersBadges = document.getElementById('filters-badges'),
         filterRuleWrap = document.getElementById('toggle-switch'),
         filterRuleCheckbox = document.getElementById('filter-rule'),
-        filterRule = false, /* true = any | false = all */
-        detailID,
+        inputHelper = document.getElementById('helper'),
         filtersWrap = mainSection.getElementsByClassName('filter-helpers')[0],
         loadMoreLoader = mainSection.getElementsByClassName('poke-loader')[0],
+        typeClass = 'type',
+        cardClass = 'poke-card',
+
+        /* helpers functions */
+
+        hide = el => el.style.display ='none',
+        show = el => el.style.display ='block',
+        isShow = el => el.style.display !== 'none',
+        showInlineBlock = el => el.style.display ='inline-block',
+        removeElement = el => el && el.parentNode && el.parentNode.removeChild(el);
+
+    let startUrl = '/api/v1/pokemon/?limit=',
+        nextUrl = '',
+        cardsData = [],
+        filterRule = true, /* true = all | false = any */
+        isFetching = false,
+        detailID,
         headerHeight,
         detailCardWidth,
         filters = [],
         compiledCardTmpl,
         compiledDetailTmpl,
-        compiledFilterTmpl,
-        typeClass = 'type',
-        cardClass = 'poke-card';
+        compiledFilterTmpl;
+
+
+    /* Functions */
+
+    const
+        app = pokeData => {
+
+            showInlineBlock(loadMoreBtn);
+            hide(loadMoreLoader);
+
+            cardsData = cardsData.concat(pokeData.objects);
+            if (pokeData.meta.next) {
+                nextUrl = pokeData.meta.next;
+            } else {
+                loadMoreWrap.innerHTML = '<pre>That\'s all ¯\\_(ツ)_/¯</pre>';
+            }
+
+            let listHTML = '';
+
+            for (let i = 0; i < pokeData.objects.length; i++) {
+                listHTML += compiledCardTmpl(pokeData.objects[i]);
+            }
+
+            pokeList.innerHTML += listHTML;
+        },
+        getData = url => {
+
+            /* for preventing filtering during fetching */
+            isFetching = true;
+
+            hide(loadMoreBtn);
+            showInlineBlock(loadMoreLoader);
+
+            fetch('http://pokeapi.co' + url)
+                .then(response => response.json())
+                .then(data => {
+                    isFetching = false;
+                    app(data);
+                })
+                .catch(error => {
+                    alert('There has been a problem with your fetch operation: ' + error.message);
+                });
+        },
+        showDetails = pokeID => {
+
+            let detailHTML = '',
+                zeros = '000'.slice(0, -pokeID.length);
+
+            for (let i = 0; i < cardsData.length; i++) {
+                if (cardsData[i].pkdx_id == pokeID) {
+                    detailHTML = compiledDetailTmpl(cardsData[i]);
+                    break;
+                }
+            }
+
+            detailCard.innerHTML = detailHTML;
+            detailID = document.getElementById('detail-id');
+            detailID.innerHTML = '#' + zeros + pokeID;
+
+        },
+        filterByType = (filterType, isRemove) => {
+
+            isRemove = (typeof isRemove === 'undefined') ? false : isRemove;
+
+            if (isFetching || !isRemove && filterType && filters.join().match(filterType)) {
+                return;
+            }
+
+            if (isRemove) {
+
+                filters = filters.filter(function (type) {
+                    return type !== filterType;
+                });
+
+                removeElement(filtersBadges.getElementsByClassName(typeClass + '-' + filterType)[0]);
+
+            } else if (filterType) {
+
+                filters.push(filterType);
+                filtersBadges.innerHTML += compiledFilterTmpl({type: filterType});
+            }
+
+            let filtersCount = filters.length;
+
+            (!filtersCount && isShow(filtersWrap)) ? hide(filtersWrap) : show(filtersWrap);
+
+            (filtersCount > 1) ? showInlineBlock(filterRuleWrap) : hide(filterRuleWrap);
+
+            if (filtersCount) {
+
+                for (let i = 0; i < cardWraps.length; i++) {
+
+                    cardWraps[i].classList.remove('fade-in', 'fade-out');
+
+                    let matches = 0;
+                    filters.forEach(function (type) {
+                        if (cardWraps[i].getElementsByClassName(typeClass + '-' + type).length !== 0) {
+                            matches++;
+                        }
+                    });
+
+                    /* true = all | false = any */
+                    if (filterRule) {
+                        cardWraps[i].classList.add((matches === filtersCount) ? 'fade-in' : 'fade-out');
+                    } else {
+                        cardWraps[i].classList.add((matches !== 0) ? 'fade-in' : 'fade-out');
+                    }
+                }
+            } else {
+                for (let i = 0; i < cardWraps.length; i++) {
+                    cardWraps[i].classList.remove('fade-in', 'fade-out');
+                }
+            }
+        };
+
 
     /* Event Listeners */
 
-    document.addEventListener("DOMContentLoaded", function() {
-
-        loadMoreBtn.style.display = 'none';
-        loadMoreLoader.style.display = 'inline';
-        loadMoreLoader.style.display = 'none';
-        mainSection.style.display = 'none';
-
+    document.addEventListener("DOMContentLoaded", () => {
         headerHeight = headerSection.offsetHeight;
 
-        //greetingSection.style.paddingTop = headerHeight + 'px';
-        greetingSection.style.marginTop = -headerHeight + 'px';
+        greetingSection.style.marginTop = -.1 * headerHeight + 'rem';
 
-        //getData(startUrl);
-
-        var cardTmpl  = document.getElementById('card-tmpl').innerHTML,
-            detailTmpl  = document.getElementById('detail-tmpl').innerHTML,
-            filterTmpl  = document.getElementById('filter-tmpl').innerHTML;
+        const cardTmpl = document.getElementById('card-tmpl').innerHTML,
+            detailTmpl = document.getElementById('detail-tmpl').innerHTML,
+            filterTmpl = document.getElementById('filter-tmpl').innerHTML;
 
         compiledCardTmpl = Handlebars.compile(cardTmpl);
         compiledDetailTmpl = Handlebars.compile(detailTmpl);
         compiledFilterTmpl = Handlebars.compile(filterTmpl);
     });
 
-    filterRuleCheckbox.addEventListener('change', function(e){
+    filterRuleCheckbox.addEventListener('change', function () {
         filterRule = this.checked;
         filterByType();
     });
 
-    limitForm.addEventListener('submit', function(e) {
+    limitForm.addEventListener('submit', function (e) {
 
-        greetingSection.style.display = 'none';
-        mainSection.style.display = 'block';
+        let val = limitInput.value;
 
-        detailCardWidth = detailCard.parentNode.offsetWidth - 30;
+        if (!val) {
+            inputHelper.textContent = 'Please fill your count.';
+            e.preventDefault();
+            return;
+        }
+
+        if (!val.match(/^\d+$/)) {
+            inputHelper.textContent = 'Only numbers will pass.';
+            e.preventDefault();
+            return;
+        }
+
+        hide(greetingSection);
+        show(mainSection);
+
+        detailCardWidth = detailCard.parentNode.offsetWidth;
 
         getData(startUrl += limitInput.value);
 
-        e.stopPropagation();
         e.preventDefault();
     });
 
-    pokeList.addEventListener('click', function(e){
+    pokeList.addEventListener('click', function (e) {
 
-        var classStr = e.target.className;
+        let classList = e.target.classList;
 
-        if (classStr.match(typeClass) && !classStr.match(typeClass + 's') ) {
+        if (classList.contains(typeClass)) {
             filterByType(e.target.innerHTML.toLowerCase());
             return false;
         }
 
-        var cardWrap = e.srcElement.closest('.' + cardClass + '-wrap');
+        let cardWrap = e.target.closest('.' + cardClass + '-wrap');
 
         if (cardWrap) {
-            var podkeID = cardWrap.getElementsByClassName(cardClass)[0].id.replace('poke-', '');
-            showDetails(podkeID);
+            let pokeID = cardWrap.getElementsByClassName(cardClass)[0].id.replace('poke-', '');
+            showDetails(pokeID);
             return false;
         }
 
@@ -93,173 +225,45 @@
         e.stopPropagation();
     });
 
-    loadMoreBtn.addEventListener('click', function(){
-        for (var i = 0; i < cardWraps.length; i++) {
-            cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
+    loadMoreBtn.addEventListener('click', function () {
+
+        /* Clear filters before get new chunk of data */
+        for (let i = 0; i < cardWraps.length; i++) {
+            cardWraps[i].classList.remove('fade-in', 'fade-out');
         }
         filtersBadges.innerHTML = '';
         filters = [];
-        filtersWrap.style.display = 'none';
+        hide(filtersWrap);
+
         getData(nextUrl);
     });
 
-    filtersWrap.addEventListener('click', function(e){
-        var deleteType = '';
-        if (e.target.className == 'filter-delete') {
-            deleteType = e.target.closest('.filter-item').className.replace('filter-item type-', '');
+    filtersBadges.addEventListener('click', function (e) {
+        if (e.target.classList.contains('filter-delete')) {
+            let deleteType = e.target.parentNode.textContent.substring(2);
             filterByType(deleteType, true);
         }
     });
 
-    window.onscroll = throttle(function (event) {
-        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrolled > mainSection.offsetTop) {
-            detailCard.style.position = 'fixed';
-            detailCard.style.width = detailCardWidth + 'px';
-        } else {
-            detailCard.style.position = 'absolute';
-        }
-    }, 16);
-
-    window.onresize = throttle(function (event) {
-        detailCardWidth = detailCard.parentNode.offsetWidth - 30;
-    }, 16);
-
-    /* Functions */
-
-    function app(pokeData) {
-
-        loadMoreBtn.style.display = 'inline-block';
-        loadMoreLoader.style.display = 'none';
-
-        cardsData = cardsData.concat(pokeData.objects);
-        if (pokeData.meta.next) {
-            nextUrl = pokeData.meta.next;
-        } else {
-            loadMoreWrap.innerHTML = '<pre>That\'s all ¯\\_(ツ)_/¯</pre>';
-        }
-
-        var listHTML = '';
-
-        for (var i = 0; i < pokeData.objects.length; i++) {
-            listHTML += compiledCardTmpl(pokeData.objects[i])
-        }
-
-        pokeList.innerHTML += listHTML;
-    }
-
-    function getData(url) {
-
-        loadMoreBtn.style.display = 'none';
-        loadMoreLoader.style.display = 'inline';
-
-        fetch('http://pokeapi.co' + url)
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
-                app(data);
-            })
-            .catch(function(error) {
-                alert('Sorry, something went wrong. Please try again later.');
-            });
-    }
-
-    function showDetails(pokeID) {
-
-        var detailHTML = '';
-
-        for (var i = 0; i < cardsData.length; i++) {
-            if (cardsData[i].pkdx_id == pokeID) {
-                detailHTML = compiledDetailTmpl(cardsData[i]);
-                break;
-            }
-        }
-
-        detailCard.innerHTML = detailHTML;
-
-        var zeros = '';
-        detailID = document.getElementById('detail-id');
-
-        if (pokeID.length === 1) {
-            zeros = '00';
-        } else if (pokeID.length === 2) {
-            zeros = '0';
-        }
-
-        detailID.innerHTML = '#' + zeros + pokeID;
-
-    }
-
-    function filterByType(filterType, isRemove) {
-
-        if (typeof isRemove === 'undefined') {
-            isRemove = false;
-        }
-
-        if (!isRemove && filterType && filters.join().match(filterType)) {
-            return;
-        }
-
-        if (isRemove) {
-            filters = filters.filter(function(type){
-                return type !== filterType;
-            });
-            removeElement(filtersBadges.getElementsByClassName(typeClass + '-' + filterType)[0]);
-        } else if (filterType) {
-            filters.push(filterType);
-            filtersBadges.innerHTML += compiledFilterTmpl({type: filterType});
-        }
-
-        if (!filters.length && filtersWrap.style.display === 'block') {
-            filtersWrap.style.display = 'none';
-        } else {
-            filtersWrap.style.display = 'block';
-        }
-
-        if (filters.length > 1) {
-            filterRuleWrap.style.display = 'inline-block';
-        } else {
-            filterRuleWrap.style.display = 'none';
-        }
-
-        for (var i = 0; i < cardWraps.length; i++) {
-
-            if (filters.length) {
-                cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
-
-                var matches = 0;
-                filters.forEach(function (type) {
-                    if (cardWraps[i].getElementsByClassName(typeClass + '-' + type).length !== 0) {
-                        matches++;
-                    }
-                });
-
-                if (!filterRule) {
-                    if (matches !== 0) {
-                        cardWraps[i].className += ' fade-in';
-                    } else {
-                        cardWraps[i].className += ' fade-out';
-                    }
-                } else {
-                    if (matches === filters.length) {
-                        cardWraps[i].className += ' fade-in';
-                    } else {
-                        cardWraps[i].className += ' fade-out';
-                    }
-                }
+    window.addEventListener('scroll', throttle(() => {
+            let scrolled = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrolled > mainSection.offsetTop) {
+                detailCard.style.position = 'fixed';
+                detailCard.style.width = detailCardWidth + 'px';
             } else {
-                cardWraps[i].className = cardWraps[i].className.replace(/fade-\w{2,3}/g, '');
+                detailCard.style.position = 'absolute';
             }
-        }
-    }
+        }, 16)
+    );
+
+    window.addEventListener('resize', throttle(() => {
+            detailCardWidth = detailCard.parentNode.offsetWidth;
+            detailCard.style.width = detailCardWidth + 'px';
+        }, 16)
+    );
 
 
     /* Next code here were stolen from WWW */
-
-    function removeElement(element) {
-        element && element.parentNode && element.parentNode.removeChild(element);
-    }
 
     function throttle(fn, threshhold, scope) {
         threshhold || (threshhold = 250);

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,149 +20,140 @@
 </head>
 
 <body>
-    <header id="main-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h1>Pokedex by m1n0s</h1>
-                </div>
+<header id="main-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>Pokedex by m1n0s</h1>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <section id="greeting" class="greeting-wrap">
-        <div class="container">
-            <h2 class="hello">Hello, %kottanName%!</h2>
-            <form id="limit-size" class="form">
-                <p>I try read your minds but you is so smart that I can't do it.</p>
-                <p>Please, tell me how many Pokemons you want to see now?</p>
-                <input type="text" id="limit-count" maxlength="3" class="limit-count" autocomplete="off">
-                <button type="submit" class="btn btn-default">go</button>
-            </form>
-        </div>
-    </section>
+<section id="greeting" class="greeting-wrap">
+    <div class="container">
+        <h2 class="hello">Hello, %kottanName%!</h2>
 
-    <section id="main" class="main">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-sm-6">
-                    <div class="filter-helpers">
-                        <h6>Filters by
-                            <div class="toggle-switch" id="toggle-switch">
-                                <label class="checkbox toggle switch">
-                                    <input id="filter-rule" type="checkbox" />
-                                    <p>
-                                        <span>all</span>
-                                        <span>any</span>
-                                    </p>
-                                    <a class="slide-button"></a>
-                                </label>
-                                of
-                            </div>
-                            types:
-                        </h6>
-                        <span id="filters-badges"></span>
+        <form id="limit-size" class="form">
+            <p>I try read your minds but you is so smart that I can't do it.</p>
+            <p>Please, tell me how many Pokemons you want to see now?</p>
+            <input type="text" id="limit-count" maxlength="3" class="limit-count" autocomplete="off">
+            <p id="helper" class="error"></p>
+            <button type="submit" class="btn btn-default">go</button>
+        </form>
+    </div>
+</section>
 
-
-                    </div>
-                    <ul id="poke-list" class="row list-unstyled">
-
-                    </ul>
+<section id="main" class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-7 col-xs-5">
+                <div class="filter-helpers">
+                    <h6>Filters by
+                        <div class="toggle-switch" id="toggle-switch">
+                            <label class="checkbox toggle switch">
+                                <input id="filter-rule" type="checkbox" checked/>
+                                <p>
+                                    <span>all</span>
+                                    <span>any</span>
+                                </p>
+                                <a class="slide-button"></a>
+                            </label>
+                            of
+                        </div>
+                        types:
+                    </h6>
+                    <span id="filters-badges"></span>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div id="poke-detail-card" class="detail-card">
-
-                    </div>
-                </div>
+                <ul id="poke-list" class="row list-unstyled"></ul>
             </div>
-            <div class="row">
-                <div id="load-more-wrap" class="col-sm-8 load-more">
-                    <button id="load-more" class="btn btn-default">load more</button>
-                    <div class="poke-loader"></div>
-                </div>
+            <div class="col-md-4 col-sm-5 col-xs-7 no-padding">
+                <div id="poke-detail-card" class="detail-card"></div>
             </div>
         </div>
-    </section>
-
-    <script id="card-tmpl" type="text/x-handlebars-template">
-        <li class="col-md-4 col-xs-12 poke-card-wrap">
-            <div id="poke-{{pkdx_id}}" class="poke-card">
-
-                <figure class="poke-img-wrap">
-                    <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
-                </figure>
-                <h3 class="name">{{name}}</h3>
-                <ul class="list-unstyled types">
-                    {{#each types}}
-                    <li class="type type-{{name}}">{{name}}</li>
-                    {{/each}}
-                </ul>
+        <div class="row">
+            <div id="load-more-wrap" class="col-md-8 col-sm-7 col-xs-5 load-more-wrap">
+                <button id="load-more" class="btn btn-default">load more</button>
+                <div class="poke-loader"></div>
             </div>
-        </li>
-    </script>
+        </div>
+    </div>
+</section>
 
-    <script id="detail-tmpl" type="text/x-handlebars-template">
-        <figure>
-            <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
-        </figure>
-        <h2 class="detail-name">{{name}} <span id="detail-id"></span></h2>
-        <table class="table detail-table">
-            <tbody>
-            <tr>
-                <td>Type</td>
-                <td>
-                    {{#each types}}
-                        <span class="detail-type">{{name}}</span>
-                    {{/each}}
-                </td>
-            </tr>
-            <tr>
-                <td>Attack</td>
-                <td>{{attack}}</td>
-            </tr>
-            <tr>
-                <td>Defense</td>
-                <td>{{defense}}</td>
-            </tr>
-            <tr>
-                <td>HP</td>
-                <td>{{hp}}</td>
-            </tr>
-            <tr>
-                <td>SP Attack</td>
-                <td>{{sp_atk}}</td>
-            </tr>
-            <tr>
-                <td>SP Defense</td>
-                <td>{{sp_def}}</td>
-            </tr>
-            <tr>
-                <td>Speed</td>
-                <td>{{speed}}</td>
-            </tr>
-            <tr>
-                <td>Weight</td>
-                <td>{{weight}}</td>
-            </tr>
-            <tr>
-                <td>Total moves</td>
-                <td>{{moves.length}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </script>
+<script id="card-tmpl" type="text/x-handlebars-template">
+    <li class="col-md-4 col-sm-6 col-xs-12 poke-card-wrap">
+        <div id="poke-{{pkdx_id}}" class="poke-card">
+            <figure class="poke-img-wrap">
+                <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
+            </figure>
+            <h3 class="name">{{name}}</h3>
+            <ul class="list-unstyled types">
+                {{#each types}}
+                <li class="type type-{{name}}">{{name}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </li>
+</script>
 
-    <script id="filter-tmpl" type="text/x-handlebars-template">
-        <span class="filter-item type-{{type}}"><span class="filter-delete">&times;</span> {{type}}</span>
-    </script>
+<script id="detail-tmpl" type="text/x-handlebars-template">
+    <figure>
+        <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
+    </figure>
+    <h2 class="detail-name">{{name}} <span id="detail-id"></span></h2>
+    <table class="table detail-table">
+        <tbody>
+        <tr>
+            <td>Type</td>
+            <td>
+                {{#each types}}
+                <span class="detail-type">{{name}}</span>
+                {{/each}}
+            </td>
+        </tr>
+        <tr>
+            <td>Attack</td>
+            <td>{{attack}}</td>
+        </tr>
+        <tr>
+            <td>Defense</td>
+            <td>{{defense}}</td>
+        </tr>
+        <tr>
+            <td>HP</td>
+            <td>{{hp}}</td>
+        </tr>
+        <tr>
+            <td>SP Attack</td>
+            <td>{{sp_atk}}</td>
+        </tr>
+        <tr>
+            <td>SP Defense</td>
+            <td>{{sp_def}}</td>
+        </tr>
+        <tr>
+            <td>Speed</td>
+            <td>{{speed}}</td>
+        </tr>
+        <tr>
+            <td>Weight</td>
+            <td>{{weight}}</td>
+        </tr>
+        <tr>
+            <td>Total moves</td>
+            <td>{{moves.length}}</td>
+        </tr>
+        </tbody>
+    </table>
+</script>
 
-    <!-- jQuery Version 1.11.1 -->
-    <script src="js/jquery.js"></script>
+<script id="filter-tmpl" type="text/x-handlebars-template">
+    <span class="filter-item type-{{type}}"><span class="filter-delete">&times;</span> {{type}}</span>
+</script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <!--script src="js/bootstrap.min.js"></script-->
-    <script src="js/handlebars-v4.0.5.js"></script>
-    <script src="js/main.js"></script>
+<!-- JavaScript -->
+<script src="js/handlebars-v4.0.5.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 
