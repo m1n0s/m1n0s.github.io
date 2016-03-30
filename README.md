@@ -1,26 +1,43 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Bare](http://startbootstrap.com/template-overviews/bare/)
+# Hello [Kottan](http://kottans.org/) or anybody else!
 
-[Bare](http://startbootstrap.com/template-overviews/bare/) is a bare HTML starter template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This template features predefined file paths for Bootstrap and jQuery, so you can quickly create Bootstrap websites.
+## Intro
+
+There is test task for JS course by [Kottans](http://kottans.org/).
+
+You can see requirements [here](https://docs.google.com/document/d/15UzM6jsXQ8sAB8IQCvKZnDVXukcAL878Q36VqcITi3Y/edit).
+
+My goal at this task was that if it is JS course - then I must show how my js-ninja-sword is powerful and elegant. So I decide to use only plain JavaScript with only one external lib - [handlebarsjs](http://handlebarsjs.com).
+Also I used Twitter Bootstrap Grid for responsive.
+And this app work perfect in up to date Google Chrome, so I didn't use any polifylls or js translators and other same things.
 
 ## Getting Started
 
-To use this template, choose one of the following options to get started:
-* Download the latest release on Start Bootstrap
-* Fork this repository on GitHub
+To run this app:
+* Go to [m1n0s.github.io](http://m1n0s.github.io/) or open index.html in Google Chrome
+* Enjoy my work
 
-## Bugs and Issues
+## Features
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/IronSummitMedia/startbootstrap-bare/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/bare/).
+* At start you choose ammount of pokemons by 1 request
+* Click on card and you will see details about current pokemon
+* There are up to 2 types at each pokemon. Clicking on them will start filtering.
+* When filter types more then one - it will show switch toggle to choose filter rule. `all` is equivalent `AND` and `any` => `OR`.
+* If you already enable filtering and decide to load more: filters will disable, and can't enable while new data isn't received. (That's feature, not bug)
+
+## TODO
+#### What I can do now, but don't have time.
+
+- [ ] All DOM variables pack into one object
+- [ ] Mix visible poke cards
+- [ ] Go to top button
+- [ ] Animate filterings (not sure)
+- [ ] Visualise data on detail card (use progress bars or etc)
+- [ ] Always visible filters
 
 ## Creator
 
-Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
+I`m Leo Hrabovetskyi. Junior Front-end developer at ProgForce Ukraine.
+I want to improve my JS skills with help of cool Kottans guys, whom I see always at conferences and meetups.
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
-
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
-
-## Copyright and License
-
-Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-bare/blob/gh-pages/LICENSE) license.
+[linkedin] (ua.linkedin.com/in/leohrabovetskyi)
+[facebook] (facebook.com/leontii.hrabovetskyi)
