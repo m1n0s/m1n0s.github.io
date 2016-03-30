@@ -9,6 +9,9 @@ body,
 .greeting-wrap {
     height: 100%;
 }
+header {
+    display: flex;
+}
 .main {
     margin: 5rem 0 15rem;
     display: none;
@@ -23,9 +26,6 @@ body,
     text-transform: capitalize;
     font-size: 1.5em;
     border: none;
-}
-.btn-default:hover {
-
 }
 .error {
     color: red;
