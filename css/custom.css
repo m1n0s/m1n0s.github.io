@@ -483,3 +483,40 @@ header {
         width: 50%;
     }
 }
+
+@media (max-height: 56.250em) {
+    h1 {
+        font-size: 1.5em;
+    }
+    .btn-default {
+        width: 100%;
+    }
+    .poke-card {
+        width: 100%;
+    }
+    .poke-card:hover {
+        transform:  translateY(0);
+    }
+    .poke-img-wrap {
+        height: 8rem;
+    }
+    .name {
+        font-size: 1.2em;
+    }
+    .hello {
+        font-size: 3.5em;
+    }
+    .greeting-wrap p {
+        font-size: 1.2em;
+    }
+    .form input {
+        font-size: 8em;
+        width: 26rem;
+        border-radius: 2rem;
+    }
+    .form .btn-default {
+        height: 8rem;
+        width: 26rem;
+        font-size: 3.5em;
+    }
+}
