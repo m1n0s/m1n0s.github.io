@@ -477,18 +477,6 @@ header {
         width: 50%;
     }
 }
-
-<<<<<<< HEAD
-/* JS logic classes */
-.pos-fixed {
-    position: fixed;
-}
-.fade-out {
-    display: none;
-}
-.fade-in {
-    display: block;
-=======
 @media (max-height: 56.250em) {
     h1 {
         font-size: 1.5em;
@@ -524,5 +512,15 @@ header {
         width: 26rem;
         font-size: 3.5em;
     }
->>>>>>> origin/master
+}
+
+/* JS logic classes */
+.pos-fixed {
+    position: fixed;
+}
+.fade-out {
+    display: none;
+}
+.fade-in {
+    display: block;
 }

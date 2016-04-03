@@ -246,18 +246,11 @@
     window.addEventListener('scroll', throttle(() => {
             let scrolled = window.pageYOffset || document.documentElement.scrollTop;
             if (scrolled > mainSection.offsetTop) {
-<<<<<<< HEAD
                 detailCard.classList.add('pos-fixed');
-                detailCard.style.width = detailCardWidth + 'px';
+                detailCard.style.width = .1*detailCardWidth + 'rem';
             } else {
                 detailCard.classList.remove('pos-fixed');
-=======
-                detailCard.style.position = 'fixed';
                 detailCard.style.width = .1*detailCardWidth + 'rem';
-            } else {
-                detailCard.style.position = 'absolute';
-                detailCard.style.width = .1*detailCardWidth + 'rem';
->>>>>>> origin/master
             }
         }, 16)
     );
