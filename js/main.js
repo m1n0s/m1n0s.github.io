@@ -111,9 +111,7 @@
 
             if (isRemove) {
 
-                filters = filters.filter(function (type) {
-                    return type !== filterType;
-                });
+                filters = filters.filter(type =>type !== filterType);
 
                 removeElement(filtersBadges.getElementsByClassName(typeClass + '-' + filterType)[0]);
 
@@ -136,7 +134,7 @@
                     cardWraps[i].classList.remove('fade-in', 'fade-out');
 
                     let matches = 0;
-                    filters.forEach(function (type) {
+                    filters.forEach(type => {
                         if (cardWraps[i].getElementsByClassName(typeClass + '-' + type).length !== 0) {
                             matches++;
                         }
@@ -248,17 +246,25 @@
     window.addEventListener('scroll', throttle(() => {
             let scrolled = window.pageYOffset || document.documentElement.scrollTop;
             if (scrolled > mainSection.offsetTop) {
+<<<<<<< HEAD
                 detailCard.classList.add('pos-fixed');
                 detailCard.style.width = detailCardWidth + 'px';
             } else {
                 detailCard.classList.remove('pos-fixed');
+=======
+                detailCard.style.position = 'fixed';
+                detailCard.style.width = .1*detailCardWidth + 'rem';
+            } else {
+                detailCard.style.position = 'absolute';
+                detailCard.style.width = .1*detailCardWidth + 'rem';
+>>>>>>> origin/master
             }
         }, 16)
     );
 
     window.addEventListener('resize', throttle(() => {
             detailCardWidth = detailCard.parentNode.offsetWidth;
-            detailCard.style.width = detailCardWidth + 'px';
+            detailCard.style.width = .1*detailCardWidth + 'rem';
         }, 16)
     );
 
