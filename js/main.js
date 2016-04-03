@@ -25,7 +25,7 @@
 
         hide = el => el.style.display ='none',
         show = el => el.style.display ='block',
-        isShow = el => el.style.display !== 'none',
+        isShown = el => el.style.display !== 'none',
         showInlineBlock = el => el.style.display ='inline-block',
         removeElement = el => el && el.parentNode && el.parentNode.removeChild(el);
 
@@ -125,7 +125,7 @@
 
             let filtersCount = filters.length;
 
-            (!filtersCount && isShow(filtersWrap)) ? hide(filtersWrap) : show(filtersWrap);
+            (!filtersCount && isShown(filtersWrap)) ? hide(filtersWrap) : show(filtersWrap);
 
             (filtersCount > 1) ? showInlineBlock(filterRuleWrap) : hide(filterRuleWrap);
 
@@ -248,10 +248,10 @@
     window.addEventListener('scroll', throttle(() => {
             let scrolled = window.pageYOffset || document.documentElement.scrollTop;
             if (scrolled > mainSection.offsetTop) {
-                detailCard.style.position = 'fixed';
+                detailCard.classList.add('pos-fixed');
                 detailCard.style.width = detailCardWidth + 'px';
             } else {
-                detailCard.style.position = 'absolute';
+                detailCard.classList.remove('pos-fixed');
             }
         }, 16)
     );
@@ -263,7 +263,7 @@
     );
 
 
-    /* Next code here were stolen from WWW */
+    /* Next code here was stolen from WWW */
 
     function throttle(fn, threshhold, scope) {
         threshhold || (threshhold = 250);

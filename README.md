@@ -39,5 +39,5 @@ To run this app:
 I`m Leo Hrabovetskyi. Junior Front-end developer at ProgForce Ukraine.
 I want to improve my JS skills with help of cool Kottans guys, whom I always meet at conferences and meetups.
 
-[linkedin] (ua.linkedin.com/in/leohrabovetskyi)
-[facebook] (facebook.com/leontii.hrabovetskyi)
+[linkedin] (http://ua.linkedin.com/in/leohrabovetskyi)
+[facebook] (http://facebook.com/leontii.hrabovetskyi)

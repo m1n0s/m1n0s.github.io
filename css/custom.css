@@ -113,12 +113,6 @@ header {
 }
 
 /* Filters */
-.fade-out {
-    display: none;
-}
-.fade-in {
-    display: block;
-}
 .filter-delete:hover {
     cursor: pointer;
 }
@@ -482,4 +476,15 @@ header {
     .detail-table td:first-child {
         width: 50%;
     }
+}
+
+/* JS logic classes */
+.pos-fixed {
+    position: fixed;
+}
+.fade-out {
+    display: none;
+}
+.fade-in {
+    display: block;
 }

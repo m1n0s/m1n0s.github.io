@@ -6,17 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="pokedex">
     <meta name="author" content="l.hrabovetskyi">
-
-    <link rel="shortcut icon" href="//assets.pokemon.com/static2/_ui/img/favicon.ico">
-
     <title>Pokedex by m1n0s</title>
 
+    <link rel="shortcut icon" href="//assets.pokemon.com/static2/_ui/img/favicon.ico">
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap-custom.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:400,500" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
 </head>
 
@@ -36,11 +34,11 @@
         <h2 class="hello">Hello, %kottanName%!</h2>
 
         <form id="limit-size" class="form">
-            <p>I try read your minds but you is so smart that I can't do it.</p>
+            <p>I try to read your minds but you are so smart that I can't do it.</p>
             <p>Please, tell me how many Pokemons you want to see now?</p>
             <input type="text" id="limit-count" maxlength="3" class="limit-count" autocomplete="off">
             <p id="helper" class="error"></p>
-            <button type="submit" class="btn btn-default">go</button>
+            <button class="btn btn-default">go</button>
         </form>
     </div>
 </section>
@@ -53,7 +51,7 @@
                     <h6>Filters by
                         <div class="toggle-switch" id="toggle-switch">
                             <label class="checkbox toggle switch">
-                                <input id="filter-rule" type="checkbox" checked/>
+                                <input id="filter-rule" type="checkbox" checked>
                                 <p>
                                     <span>all</span>
                                     <span>any</span>
@@ -85,7 +83,7 @@
     <li class="col-md-4 col-sm-6 col-xs-12 poke-card-wrap">
         <div id="poke-{{pkdx_id}}" class="poke-card">
             <figure class="poke-img-wrap">
-                <img src="http://pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
+                <img src="//pokeapi.co/media/img/{{pkdx_id}}.png" alt="{{name}}"/>
             </figure>
             <h3 class="name">{{name}}</h3>
             <ul class="list-unstyled types">
