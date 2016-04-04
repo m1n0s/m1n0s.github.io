@@ -27,6 +27,7 @@ To run this app:
 ## TODO
 #### What I can do more, but don't have enough time.
 
+- [ ] Add placeholder to detail card `OR` add ability to close detail card and make cards section 100% width
 - [ ] Pack all DOM variables into one object
 - [ ] Mix visible pokemon cards
 - [ ] Add `Go to top` button
